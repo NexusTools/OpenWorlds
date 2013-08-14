@@ -41,7 +41,8 @@ DEPENDPATH += $$PWD/../extern/MoeGameEngine/extern/ModularCore
 include($$PWD/../extern/MoeGameEngine/extern/GitProjectVersionQt/version.pri)
 
 OTHER_FILES += \
-    content.xml
+    content.xml \
+    init.js
 
 RESOURCES += \
     resources.qrc
