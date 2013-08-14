@@ -19,12 +19,18 @@ int main(int argc, char *argv[])
     if(path)
         sPath = QString::fromLocal8Bit(path).split(PATH_SEP);
 
+#ifdef Q_OS_UNIX
     foreach(QString p, QStringList() << "/usr/bin" << "/bin" << "/local/bin" << "/local/usr/bin" << "/opt/bin" << "/opt/usr/bin") {
         if(!sPath.contains(p))
             sPath << p;
     }
+#endif
 
-    sPath << QDir("..").absolutePath() + "/extern/MoeGameEngine/client";
+    QString base = QDir::toNativeSeparators(QDir("..").absolutePath());
+    if(!base.endsWith(QDir::separator()))
+        base += QDir::separator();
+
+    sPath << base + QDir::toNativeSeparators("extern/MoeGameEngine/client" RELEASE_DIR);
     qDebug() << "Using bin search path" << sPath;
     QDir::setSearchPaths("bin", sPath);
 
@@ -48,12 +54,12 @@ int main(int argc, char *argv[])
 #define lPath sPath
 #endif
 
-    lPath << QDir("..").absolutePath() + "/extern/MoeGameEngine/extern/GenericUI/core";
-    lPath << QDir("..").absolutePath() + "/extern/MoeGameEngine/extern/InputManager";
-    lPath << QDir("..").absolutePath() + "/extern/MoeGameEngine/extern/ModularCore";
-    lPath << QDir("..").absolutePath() + "/extern/MoeGameEngine/extern/NexusComm";
-    lPath << QDir("..").absolutePath() + "/extern/MoeGameEngine/lib";
-    lPath << QDir("..").absolutePath() + "/module";
+    lPath << base + QDir::toNativeSeparators("extern/MoeGameEngine/extern/GenericUI/core" RELEASE_DIR);
+    lPath << base + QDir::toNativeSeparators("extern/MoeGameEngine/extern/InputManager" RELEASE_DIR);
+    lPath << base + QDir::toNativeSeparators("extern/MoeGameEngine/extern/ModularCore" RELEASE_DIR);
+    lPath << base + QDir::toNativeSeparators("extern/MoeGameEngine/extern/NexusComm" RELEASE_DIR);
+    lPath << base + QDir::toNativeSeparators("extern/MoeGameEngine/lib" RELEASE_DIR);
+    lPath << base + QDir::toNativeSeparators("module" RELEASE_DIR);
     qDebug() << "Using lib search path" << lPath;
     QDir::setSearchPaths("lib", lPath);
 

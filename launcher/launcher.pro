@@ -11,6 +11,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = launcher
 TEMPLATE = app
 
+CONFIG(debug, debug|release): DEFINES += DEBUG_BUILD
 
 SOURCES += main.cpp\
         openworldslauncher.cpp
