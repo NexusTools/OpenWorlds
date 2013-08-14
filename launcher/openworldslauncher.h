@@ -18,6 +18,9 @@ public:
 
 public slots:
     void launch();
+
+    void dumpErrOut();
+    void dumpStdOut();
     
 private:
     Ui::OpenWorldsLauncher *ui;
