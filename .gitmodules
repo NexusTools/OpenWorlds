@@ -1,0 +1,9 @@
+[submodule "extern/MoeGameEngine"]
+	path = extern/MoeGameEngine
+	url = git@github.com:NexusTools/MOE.git
+[submodule "extern/GitProjectVersionQt"]
+	path = extern/GitProjectVersionQt
+	url = git@github.com:NexusTools/GitProjectVersionQt.git
+[submodule "extern/ModularCore"]
+	path = extern/ModularCore
+	url = git@github.com:NexusTools/ModularCore.git
