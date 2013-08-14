@@ -13,6 +13,7 @@ OpenWorldsLauncher::OpenWorldsLauncher(QWidget *parent) :
     ui(new Ui::OpenWorldsLauncher)
 {
     ui->setupUi(this);
+    setWindowTitle(QString("OpenWorlds Launcher V%1").arg(qApp->applicationVersion()));
     ui->version->setText(qApp->applicationVersion());
 
     QProcessEnvironment procEnv = QProcessEnvironment::systemEnvironment();
@@ -37,11 +38,6 @@ OpenWorldsLauncher::OpenWorldsLauncher(QWidget *parent) :
 
     connect(&_process, SIGNAL(readyReadStandardOutput()), this, SLOT(dumpStdOut()));
     connect(&_process, SIGNAL(readyReadStandardError()), this, SLOT(dumpErrOut()));
-}
-
-OpenWorldsLauncher::~OpenWorldsLauncher()
-{
-    delete ui;
 }
 
 void OpenWorldsLauncher::launch() {
@@ -73,10 +69,20 @@ void OpenWorldsLauncher::launch() {
 }
 
 void OpenWorldsLauncher::dumpStdOut() {
-    qWarning() << _process.readAllStandardOutput();
+    QByteArray msg = _process.readAllStandardOutput();
 
+    fwrite(msg.data(), 1, msg.size(), stdout);
+    fflush(stdout);
 }
 
 void OpenWorldsLauncher::dumpErrOut() {
-    qWarning() << _process.readAllStandardError();
+    QByteArray msg = _process.readAllStandardError();
+
+    fwrite(msg.data(), 1, msg.size(), stderr);
+    fflush(stderr);
+}
+
+OpenWorldsLauncher::~OpenWorldsLauncher()
+{
+    delete ui;
 }
