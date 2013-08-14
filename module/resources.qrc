@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/OpenWorlds">
+        <file>content.xml</file>
+    </qresource>
+</RCC>

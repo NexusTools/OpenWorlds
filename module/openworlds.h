@@ -8,9 +8,7 @@ class OpenWorlds : public MoeContentPlugin
     Q_OBJECT
     
 public:
-    OpenWorlds();
-
-
+    Q_INVOKABLE OpenWorlds();
 
 private:
 };
