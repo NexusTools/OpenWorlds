@@ -1,4 +1,6 @@
 TEMPLATE = subdirs
 
-SUBDIRS += extern
+SUBDIRS += extern \
+    launcher \
+    module
 
