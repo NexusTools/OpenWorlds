@@ -23,15 +23,17 @@ OpenWorldsLauncher::~OpenWorldsLauncher()
 
 void OpenWorldsLauncher::launch() {
     QFileInfo moeLauncher("bin:MoeGameLauncher");
-    QFileInfo openWorldsContent("bin:libOpenWorlds.so");
     if(!moeLauncher.exists()) {
         QMessageBox::critical(this, "Can't find MoeGameLauncher", "Unable to find the install directory for MoeGameLauncher, you may have to reinstall it");
         return;
     }
+
+    QFileInfo openWorldsContent("bin:libOpenWorlds.so");
     if(!openWorldsContent.exists()) {
         QMessageBox::critical(this, "Can't find libOpenWorlds.so", "Unable to find the install directory for libOpenWorlds.so, you may have to reinstall it");
         return;
     }
+
 
     _process.start(moeLauncher.absoluteFilePath(), QStringList() << "--content" << openWorldsContent.absoluteFilePath());
 }
