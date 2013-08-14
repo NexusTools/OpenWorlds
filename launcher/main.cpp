@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
             lPath << p;
     }
 #else
-#define lpath spath;
+#define lPath sPath
 #endif
 
     lPath << QDir("..").absolutePath() + "/extern/MoeGameEngine/extern/GenericUI/core";
