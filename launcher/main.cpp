@@ -3,6 +3,8 @@
 #include <QDebug>
 #include <QDir>
 
+#include "path.h"
+
 #include <project-version.h>
 
 int main(int argc, char *argv[])
@@ -15,7 +17,7 @@ int main(int argc, char *argv[])
     QStringList sPath;
     char* path = getenv("PATH");
     if(path)
-        sPath = QString::fromLocal8Bit(path).split(':');
+        sPath = QString::fromLocal8Bit(path).split(PATH_SEP);
 
     foreach(QString p, QStringList() << "/usr/bin" << "/bin" << "/local/bin" << "/local/usr/bin" << "/opt/bin" << "/opt/usr/bin") {
         if(!sPath.contains(p))
@@ -36,7 +38,7 @@ int main(int argc, char *argv[])
             #endif
                 );
     if(path)
-        lPath = QString::fromLocal8Bit(path).split(':');
+        lPath = QString::fromLocal8Bit(path).split(PATH_SEP);
 
     foreach(QString p, sPath) {
         if(!lPath.contains(p))

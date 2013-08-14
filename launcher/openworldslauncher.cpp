@@ -1,5 +1,6 @@
 #include "openworldslauncher.h"
 #include "ui_openworldslauncher.h"
+#include "path.h"
 
 #include <QProcessEnvironment>
 #include <QMessageBox>
@@ -22,10 +23,10 @@ OpenWorldsLauncher::OpenWorldsLauncher(QWidget *parent) :
             #else
                 "LD_LIBRARY_PATH"
             #endif
-                , QDir::searchPaths("lib").join(':'));
-    procEnv.insert("PATH", QDir::searchPaths("bin").join(':'));
+                , QDir::searchPaths("lib").join(PATH_SEP));
+    procEnv.insert("PATH", QDir::searchPaths("bin").join(PATH_SEP));
 #else
-    procEnv.insert("PATH", QDir::searchPaths("lib").join(':'));
+    procEnv.insert("PATH", QDir::searchPaths("lib").join(PATH_SEP));
 #endif
     qDebug() << procEnv.toStringList();
 

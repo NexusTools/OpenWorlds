@@ -15,7 +15,8 @@ TEMPLATE = app
 SOURCES += main.cpp\
         openworldslauncher.cpp
 
-HEADERS  += openworldslauncher.h
+HEADERS  += openworldslauncher.h \
+    path.h
 
 FORMS    += openworldslauncher.ui
 
