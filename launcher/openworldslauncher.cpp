@@ -15,8 +15,18 @@ OpenWorldsLauncher::OpenWorldsLauncher(QWidget *parent) :
     ui->version->setText(qApp->applicationVersion());
 
     QProcessEnvironment procEnv = QProcessEnvironment::systemEnvironment();
-    procEnv.insert("LD_LIBRARY_PATH", QDir::searchPaths("lib").join(':'));
+#ifdef Q_OS_UNIX
+    procEnv.insert(
+            #ifdef Q_OS_MAC
+                "DYLD_FALLBACK_LIBRARY_PATH"
+            #else
+                "LD_LIBRARY_PATH"
+            #endif
+                , QDir::searchPaths("lib").join(':'));
     procEnv.insert("PATH", QDir::searchPaths("bin").join(':'));
+#else
+    procEnv.insert("PATH", QDir::searchPaths("lib").join(':'));
+#endif
     qDebug() << procEnv.toStringList();
 
     _process.setProcessEnvironment(procEnv);
@@ -34,15 +44,27 @@ OpenWorldsLauncher::~OpenWorldsLauncher()
 }
 
 void OpenWorldsLauncher::launch() {
-    QFileInfo moeLauncher("bin:MoeGameLauncher");
+    QFileInfo moeLauncher(
+            #ifdef Q_OS_UNIX
+                "bin:MoeGameLauncher"
+            #else
+                "bin:MoeGameLauncher.exe"
+            #endif
+                );
     if(!moeLauncher.exists()) {
-        QMessageBox::critical(this, "Can't find MoeGameLauncher", "Unable to find the install directory for MoeGameLauncher, you may have to reinstall it");
+        QMessageBox::critical(this, "Missing MoeGameEngine", QString("Unable to find the install directory for %1, you may have to reinstall it").arg(moeLauncher.fileName()));
         return;
     }
 
-    QFileInfo openWorldsContent("lib:libOpenWorlds.so");
+    QFileInfo openWorldsContent(
+            #ifdef Q_OS_UNIX
+                "lib:libOpenWorlds.so"
+            #else
+                "lib:OpenWorlds0.dll"
+            #endif
+                );
     if(!openWorldsContent.exists()) {
-        QMessageBox::critical(this, "Can't find libOpenWorlds.so", "Unable to find the install directory for libOpenWorlds.so, you may have to reinstall it");
+        QMessageBox::critical(this, "Missing game content", QString("Unable to find the install directory for %1, you may have to reinstall it").arg(openWorldsContent.fileName()));
         return;
     }
 

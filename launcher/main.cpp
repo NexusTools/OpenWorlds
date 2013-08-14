@@ -26,8 +26,15 @@ int main(int argc, char *argv[])
     qDebug() << "Using bin search path" << sPath;
     QDir::setSearchPaths("bin", sPath);
 
+#ifdef Q_OS_UNIX
     QStringList lPath;
-    path = getenv("LD_LIBRARY_PATH");
+    path = getenv(
+            #ifdef Q_OS_MAC
+                "DYLD_FALLBACK_LIBRARY_PATH"
+            #else
+                "LD_LIBRARY_PATH"
+            #endif
+                );
     if(path)
         lPath = QString::fromLocal8Bit(path).split(':');
 
@@ -35,7 +42,9 @@ int main(int argc, char *argv[])
         if(!lPath.contains(p))
             lPath << p;
     }
-
+#else
+#define lpath spath;
+#endif
 
     lPath << QDir("..").absolutePath() + "/extern/MoeGameEngine/extern/GenericUI/core";
     lPath << QDir("..").absolutePath() + "/extern/MoeGameEngine/extern/InputManager";
