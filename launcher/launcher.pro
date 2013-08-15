@@ -22,3 +22,6 @@ HEADERS  += openworldslauncher.h \
 FORMS    += openworldslauncher.ui
 
 include($$PWD/../extern/MoeGameEngine/extern/GitProjectVersionQt/version.pri)
+
+RESOURCES += \
+    data.qrc
