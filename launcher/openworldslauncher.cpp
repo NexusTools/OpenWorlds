@@ -15,6 +15,7 @@ OpenWorldsLauncher::OpenWorldsLauncher(QWidget *parent) :
     ui->setupUi(this);
     setWindowTitle(QString("OpenWorlds Launcher V%1").arg(qApp->applicationVersion()));
     ui->version->setText(qApp->applicationVersion());
+    ui->progressBar->hide();
 
     QProcessEnvironment procEnv = QProcessEnvironment::systemEnvironment();
 #ifdef Q_OS_UNIX
