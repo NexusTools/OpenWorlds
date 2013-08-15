@@ -10,6 +10,8 @@ class OpenWorlds : public MoeContentPlugin
 public:
     Q_INVOKABLE OpenWorlds();
 
+    Q_INVOKABLE QString test() const;
+
 private:
 };
 

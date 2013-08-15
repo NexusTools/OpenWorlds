@@ -65,6 +65,7 @@ void OpenWorldsLauncher::launch() {
         return;
     }
 
+    _process.setWorkingDirectory(moeLauncher.dir().absolutePath());
     _process.start(moeLauncher.absoluteFilePath(), QStringList() << "--content" << openWorldsContent.absoluteFilePath());
 }
 
