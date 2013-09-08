@@ -10,7 +10,6 @@ class OpenWorlds : public MoeContentPlugin
 public:
     Q_INVOKABLE OpenWorlds();
 
-private:
 };
 
 #endif // OPENWORLDS_H

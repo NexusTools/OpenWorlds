@@ -26,11 +26,31 @@ int main(int argc, char *argv[])
     }
 #endif
 
-    QString base = QDir::toNativeSeparators(QDir("..").absolutePath());
-    if(!base.endsWith(QDir::separator()))
-        base += QDir::separator();
+    QStringList bases;
+    {
+        QString base = QDir::toNativeSeparators(QDir("..").absolutePath());
+        if(!base.endsWith(QDir::separator()))
+            base += QDir::separator();
+        bases << base;
+    }
+    {
+        QFileInfo myself(argv[0]);
+        if(myself.exists()) {
+            QString base = myself.dir().absolutePath();
+            if(!base.endsWith(QDir::separator()))
+                base += QDir::separator();
+            bases << base;
 
-    sPath << base + QDir::toNativeSeparators("extern/MoeGameEngine/client" RELEASE_DIR);
+            base = QFileInfo(QDir(base), "../..").dir().absolutePath();
+            if(!base.endsWith(QDir::separator()))
+                base += QDir::separator();
+            bases << base;
+        }
+    }
+    qDebug() << bases;
+
+    foreach(QString base, bases)
+        sPath << base + QDir::toNativeSeparators("extern/MoeGameEngine/client" RELEASE_DIR);
     qDebug() << "Using bin search path" << sPath;
     QDir::setSearchPaths("bin", sPath);
 
@@ -53,13 +73,15 @@ int main(int argc, char *argv[])
 #else
 #define lPath sPath
 #endif
+    foreach(QString base, bases) {
+        lPath << base + QDir::toNativeSeparators("extern/MoeGameEngine/extern/GenericUI/core" RELEASE_DIR);
+        lPath << base + QDir::toNativeSeparators("extern/MoeGameEngine/extern/InputManager" RELEASE_DIR);
+        lPath << base + QDir::toNativeSeparators("extern/MoeGameEngine/extern/ModularCore" RELEASE_DIR);
+        lPath << base + QDir::toNativeSeparators("extern/MoeGameEngine/extern/NexusComm" RELEASE_DIR);
+        lPath << base + QDir::toNativeSeparators("extern/MoeGameEngine/lib" RELEASE_DIR);
+        lPath << base + QDir::toNativeSeparators("module" RELEASE_DIR);
+    }
 
-    lPath << base + QDir::toNativeSeparators("extern/MoeGameEngine/extern/GenericUI/core" RELEASE_DIR);
-    lPath << base + QDir::toNativeSeparators("extern/MoeGameEngine/extern/InputManager" RELEASE_DIR);
-    lPath << base + QDir::toNativeSeparators("extern/MoeGameEngine/extern/ModularCore" RELEASE_DIR);
-    lPath << base + QDir::toNativeSeparators("extern/MoeGameEngine/extern/NexusComm" RELEASE_DIR);
-    lPath << base + QDir::toNativeSeparators("extern/MoeGameEngine/lib" RELEASE_DIR);
-    lPath << base + QDir::toNativeSeparators("module" RELEASE_DIR);
     qDebug() << "Using lib search path" << lPath;
     QDir::setSearchPaths("lib", lPath);
 

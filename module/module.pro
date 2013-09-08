@@ -13,7 +13,8 @@ DEFINES += MODULE_LIBRARY
 
 SOURCES += openworlds.cpp
 
-HEADERS += openworlds.h
+HEADERS += \
+    openworlds.h
 
 unix:!symbian {
     maemo5 {

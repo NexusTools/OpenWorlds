@@ -66,8 +66,12 @@ void OpenWorldsLauncher::launch() {
         return;
     }
 
+    QStringList contentLookupPaths;
+    contentLookupPaths << "./packages";
+    contentLookupPaths << QDir::currentPath();
+
     _process.setWorkingDirectory(moeLauncher.dir().absolutePath());
-    _process.start(moeLauncher.absoluteFilePath(), QStringList() << "--content" << openWorldsContent.absoluteFilePath());
+    _process.start(moeLauncher.absoluteFilePath(), QStringList() << "--content" << openWorldsContent.absoluteFilePath() << "--content-lookup-path" << contentLookupPaths.join(':'));
 }
 
 void OpenWorldsLauncher::dumpStdOut() {
