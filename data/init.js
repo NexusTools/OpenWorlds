@@ -21,14 +21,16 @@ glView.setPos(70, 50);
 
 var glScene = new GLScene();
 glView.setScene(glScene);
-glView.camZ = -4;
+glView.camZ = -200;
 
 var glCube = new GLCubeModel();
 glScene.addModel(glCube);
 
-
-engine.tick.connect(function() {
-    glCube.rotate(0, 1, 0.2);
+surface.connected.connect(function(){
+    engine.tick.connect(function() {
+        glView.camZ += (-5 - glView.camZ)/28;
+        glCube.rotate(0, 1, 0.2);
+    });
 });
 
 var textOverlay = new GraphicsText("Select Content Package", Font("Arial", 16), loader);
