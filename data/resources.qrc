@@ -2,6 +2,5 @@
     <qresource prefix="/OpenWorlds">
         <file>content.xml</file>
         <file>init.js</file>
-        <file>OpenWorlds/blocks/dirt/info.xml</file>
     </qresource>
 </RCC>
