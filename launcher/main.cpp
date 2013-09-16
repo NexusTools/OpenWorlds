@@ -88,6 +88,6 @@ int main(int argc, char *argv[])
 
     OpenWorldsLauncher w;
     w.show();
-    
+
     return a.exec();
 }

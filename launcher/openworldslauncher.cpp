@@ -32,13 +32,24 @@ OpenWorldsLauncher::OpenWorldsLauncher(QWidget *parent) :
 #endif
     qDebug() << procEnv.toStringList();
 
-    _process.setProcessEnvironment(procEnv);
-    connect(ui->launch, SIGNAL(clicked()), this, SLOT(launch()));
-    connect(&_process, SIGNAL(finished(int)), this, SLOT(show()));
-    connect(&_process, SIGNAL(started()), this, SLOT(hide()));
+    if(qApp->arguments().contains("--start"))
+        connect(&_process, SIGNAL(finished(int)), qApp, SLOT(quit()), Qt::QueuedConnection);
+    else {
+        connect(ui->launch, SIGNAL(clicked()), this, SLOT(launch()));
+        connect(&_process, SIGNAL(finished(int)), this, SLOT(show()), Qt::QueuedConnection);
+    }
+    connect(&_process, SIGNAL(started()), this, SLOT(hide()), Qt::QueuedConnection);
 
+    _process.setProcessEnvironment(procEnv);
     connect(&_process, SIGNAL(readyReadStandardOutput()), this, SLOT(dumpStdOut()));
     connect(&_process, SIGNAL(readyReadStandardError()), this, SLOT(dumpErrOut()));
+}
+
+bool OpenWorldsLauncher::event(QEvent *ev) {
+    if(ev->type() == QEvent::Paint && qApp->arguments().contains("--start"))
+        metaObject()->invokeMethod(this, "launch", Qt::QueuedConnection);
+
+    return QMainWindow::event(ev);
 }
 
 void OpenWorldsLauncher::launch() {

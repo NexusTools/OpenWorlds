@@ -16,6 +16,8 @@ public:
     explicit OpenWorldsLauncher(QWidget *parent = 0);
     ~OpenWorldsLauncher();
 
+    bool event(QEvent *event);
+
 public slots:
     void launch();
 

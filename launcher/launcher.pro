@@ -25,3 +25,5 @@ include($$PWD/../extern/MoeGameEngine/extern/GitProjectVersionQt/version.pri)
 
 RESOURCES += \
     data.qrc
+
+DEPENDPATH += $$PWD/../extern/MoeGameEngine/client/

@@ -2,5 +2,6 @@
     <qresource prefix="/OpenWorlds">
         <file>content.xml</file>
         <file>init.js</file>
+        <file>pages/content-select.js</file>
     </qresource>
 </RCC>
